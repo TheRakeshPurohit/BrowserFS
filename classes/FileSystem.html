@@ -16,35 +16,14 @@
 <li><a href="FileSystem.html">FileSystem</a></li></ul>
 <h1>Class FileSystem<code class="tsd-tag ts-flagAbstract">Abstract</code> </h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography"><p>Interface for a filesystem. <strong>All</strong> BrowserFS FileSystems should implement
-this interface.</p>
-<p>Below, we denote each API method as <strong>Core</strong>, <strong>Supplemental</strong>, or
-<strong>Optional</strong>.</p>
-<a id="md:core-methods" class="tsd-anchor"></a><h3><a href="#md:core-methods">Core Methods</a></h3><p><strong>Core</strong> API methods <em>need</em> to be implemented for basic read/write
-functionality.</p>
-<p>Note that read-only FileSystems can choose to not implement core methods
-that mutate files or metadata. The default implementation will pass a
-NOT_SUPPORTED error to the callback.</p>
-<a id="md:supplemental-methods" class="tsd-anchor"></a><h3><a href="#md:supplemental-methods">Supplemental Methods</a></h3><p><strong>Supplemental</strong> API methods do not need to be implemented by a filesystem.
-The default implementation implements all of the supplemental API methods in
-terms of the <strong>core</strong> API methods.</p>
-<p>Note that a file system may choose to implement supplemental methods for
-efficiency reasons.</p>
-<p>The code for some supplemental methods was adapted directly from NodeJS&#39;s
-fs.js source code.</p>
-<a id="md:optional-methods" class="tsd-anchor"></a><h3><a href="#md:optional-methods">Optional Methods</a></h3><p><strong>Optional</strong> API methods provide functionality that may not be available in
-all filesystems. For example, all symlink/hardlink-related API methods fall
-under this category.</p>
-<p>The default implementation will pass a NOT_SUPPORTED error to the callback.</p>
+<div class="tsd-comment tsd-typography"><p>Structure for a filesystem. <strong>All</strong> BrowserFS FileSystems must implement
+this.</p>
 <a id="md:argument-assumptions" class="tsd-anchor"></a><h3><a href="#md:argument-assumptions">Argument Assumptions</a></h3><p>You can assume the following about arguments passed to each API method:</p>
 <ul>
-<li><strong>Every path is an absolute path.</strong> Meaning, <code>.</code>, <code>..</code>, and other items
+<li>Every path is an absolute path. <code>.</code>, <code>..</code>, and other items
 are resolved into an absolute form.</li>
-<li><strong>All arguments are present.</strong> Any optional arguments at the Node API level
+<li>All arguments are present. Any optional arguments at the Node API level
 have been passed in with their default values.</li>
-<li><strong>The callback will reset the stack depth.</strong> When your filesystem calls the
-callback with the requested information, it will use <code>setImmediate</code> to
-reset the JavaScript stack depth before calling the user-supplied callback.</li>
 </ul>
 </div>
 <div class="tsd-comment tsd-typography"></div></section>
@@ -55,7 +34,7 @@ reset the JavaScript stack depth before calling the user-supplied callback.</li>
 <ul class="tsd-hierarchy">
 <li><a href="BaseFileSystem.html" class="tsd-signature-type tsd-kind-class">BaseFileSystem</a></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L105">src/filesystem.ts:105</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L70">src/filesystem.ts:70</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -68,6 +47,7 @@ reset the JavaScript stack depth before calling the user-supplied callback.</li>
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Properties</h3>
 <div class="tsd-index-list"><a href="FileSystem.html#metadata" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>metadata</span></a>
+<a href="FileSystem.html#Name" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>Name</span></a>
 </div></section>
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Methods</h3>
@@ -109,6 +89,7 @@ reset the JavaScript stack depth before calling the user-supplied callback.</li>
 <a href="FileSystem.html#unlinkSync" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>unlink<wbr/>Sync</span></a>
 <a href="FileSystem.html#utimes" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>utimes</span></a>
 <a href="FileSystem.html#utimesSync" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>utimes<wbr/>Sync</span></a>
+<a href="FileSystem.html#whenReady" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>when<wbr/>Ready</span></a>
 <a href="FileSystem.html#writeFile" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>write<wbr/>File</span></a>
 <a href="FileSystem.html#writeFileSync" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>write<wbr/>File<wbr/>Sync</span></a>
 </div></section></div></details></section></section>
@@ -117,16 +98,28 @@ reset the JavaScript stack depth before calling the user-supplied callback.</li>
 <section class="tsd-panel tsd-member"><a id="constructor" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="constructor.new_FileSystem"><span class="tsd-kind-constructor-signature">new <wbr/>File<wbr/>System</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="FileSystem.html" class="tsd-signature-type tsd-kind-class">FileSystem</a><a href="#constructor.new_FileSystem" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="constructor.new_FileSystem"><span class="tsd-kind-constructor-signature">new <wbr/>File<wbr/>System</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">options</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="FileSystem.html" class="tsd-signature-type tsd-kind-class">FileSystem</a><a href="#constructor.new_FileSystem" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
-<h4 class="tsd-returns-title">Returns <a href="FileSystem.html" class="tsd-signature-type tsd-kind-class">FileSystem</a></h4></li></ul></section></section>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">options</span>: <span class="tsd-signature-type">object</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="FileSystem.html" class="tsd-signature-type tsd-kind-class">FileSystem</a></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L75">src/filesystem.ts:75</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member"><a id="metadata" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagReadonly">Readonly</code> <code class="tsd-tag ts-flagAbstract">Abstract</code> <span>metadata</span><a href="#metadata" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">metadata</span><span class="tsd-signature-symbol">:</span> <a href="../interfaces/FileSystemMetadata.html" class="tsd-signature-type tsd-kind-interface">FileSystemMetadata</a></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L106">src/filesystem.ts:106</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L73">src/filesystem.ts:73</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member"><a id="Name" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <code class="tsd-tag ts-flagReadonly">Readonly</code> <span>Name</span><a href="#Name" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">Name</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L71">src/filesystem.ts:71</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member"><a id="access" class="tsd-anchor"></a>
@@ -148,7 +141,7 @@ reset the JavaScript stack depth before calling the user-supplied callback.</li>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L112">src/filesystem.ts:112</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L85">src/filesystem.ts:85</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="accessSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>access<wbr/>Sync</span><a href="#accessSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -168,7 +161,7 @@ reset the JavaScript stack depth before calling the user-supplied callback.</li>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L116">src/filesystem.ts:116</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L89">src/filesystem.ts:89</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="appendFile" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>append<wbr/>File</span><a href="#appendFile" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -195,7 +188,7 @@ it not yet exists.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L266">src/filesystem.ts:266</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L239">src/filesystem.ts:239</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="appendFileSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>append<wbr/>File<wbr/>Sync</span><a href="#appendFileSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -222,7 +215,7 @@ it not yet exists.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L271">src/filesystem.ts:271</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L244">src/filesystem.ts:244</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="chmod" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>chmod</span><a href="#chmod" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -242,7 +235,7 @@ it not yet exists.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L278">src/filesystem.ts:278</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L251">src/filesystem.ts:251</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="chmodSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>chmod<wbr/>Sync</span><a href="#chmodSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -262,7 +255,7 @@ it not yet exists.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L282">src/filesystem.ts:282</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L255">src/filesystem.ts:255</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="chown" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>chown</span><a href="#chown" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -284,7 +277,7 @@ it not yet exists.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L286">src/filesystem.ts:286</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L259">src/filesystem.ts:259</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="chownSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>chown<wbr/>Sync</span><a href="#chownSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -306,7 +299,7 @@ it not yet exists.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L290">src/filesystem.ts:290</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L263">src/filesystem.ts:263</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="exists" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>exists</span><a href="#exists" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -325,7 +318,7 @@ the file system. Then call the callback argument with either true or false.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L199">src/filesystem.ts:199</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L172">src/filesystem.ts:172</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="existsSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>exists<wbr/>Sync</span><a href="#existsSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -344,7 +337,7 @@ the file system.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L204">src/filesystem.ts:204</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L177">src/filesystem.ts:177</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="link" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>link</span><a href="#link" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -364,7 +357,7 @@ the file system.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L306">src/filesystem.ts:306</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L279">src/filesystem.ts:279</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="linkSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>link<wbr/>Sync</span><a href="#linkSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -384,7 +377,7 @@ the file system.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L310">src/filesystem.ts:310</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L283">src/filesystem.ts:283</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="mkdir" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>mkdir</span><a href="#mkdir" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -408,7 +401,7 @@ the file system.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L175">src/filesystem.ts:175</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L148">src/filesystem.ts:148</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="mkdirSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>mkdir<wbr/>Sync</span><a href="#mkdirSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -432,7 +425,7 @@ the file system.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L181">src/filesystem.ts:181</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L154">src/filesystem.ts:154</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="open" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>open</span><a href="#open" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -460,7 +453,7 @@ the file system.</p>
 <h4>See</h4><p><a href="http://www.manpagez.com/man/2/open/">http://www.manpagez.com/man/2/open/</a></p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L143">src/filesystem.ts:143</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L116">src/filesystem.ts:116</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="openSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>open<wbr/>Sync</span><a href="#openSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -488,7 +481,7 @@ the file system.</p>
 <h4>See</h4><p><a href="http://www.manpagez.com/man/2/open/">http://www.manpagez.com/man/2/open/</a></p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L152">src/filesystem.ts:152</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L125">src/filesystem.ts:125</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="readFile" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>read<wbr/>File</span><a href="#readFile" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -516,7 +509,7 @@ If no encoding is specified, then the raw buffer is returned.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/FileContents.html" class="tsd-signature-type tsd-kind-type-alias">FileContents</a><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L240">src/filesystem.ts:240</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L213">src/filesystem.ts:213</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="readFileSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>read<wbr/>File<wbr/>Sync</span><a href="#readFileSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -543,7 +536,7 @@ If no encoding is specified, then the raw buffer is returned.</p>
 <h4 class="tsd-returns-title">Returns <a href="../types/FileContents.html" class="tsd-signature-type tsd-kind-type-alias">FileContents</a></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L247">src/filesystem.ts:247</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L220">src/filesystem.ts:220</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="readdir" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>readdir</span><a href="#readdir" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -563,7 +556,7 @@ the names of the files in the directory excluding <code>&#39;.&#39;</code> and <
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L188">src/filesystem.ts:188</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L161">src/filesystem.ts:161</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="readdirSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>readdir<wbr/>Sync</span><a href="#readdirSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -581,7 +574,7 @@ the names of the files in the directory excluding <code>&#39;.&#39;</code> and <
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L192">src/filesystem.ts:192</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L165">src/filesystem.ts:165</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="readlink" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>readlink</span><a href="#readlink" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -599,7 +592,7 @@ the names of the files in the directory excluding <code>&#39;.&#39;</code> and <
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L324">src/filesystem.ts:324</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L297">src/filesystem.ts:297</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="readlinkSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>readlink<wbr/>Sync</span><a href="#readlinkSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -617,7 +610,7 @@ the names of the files in the directory excluding <code>&#39;.&#39;</code> and <
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L328">src/filesystem.ts:328</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L301">src/filesystem.ts:301</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="realpath" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>realpath</span><a href="#realpath" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -637,7 +630,7 @@ the names of the files in the directory excluding <code>&#39;.&#39;</code> and <
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L214">src/filesystem.ts:214</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L187">src/filesystem.ts:187</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="realpathSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>realpath<wbr/>Sync</span><a href="#realpathSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -656,7 +649,7 @@ the names of the files in the directory excluding <code>&#39;.&#39;</code> and <
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L223">src/filesystem.ts:223</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L196">src/filesystem.ts:196</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="rename" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>rename</span><a href="#rename" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -677,7 +670,7 @@ are given to the completion callback.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L121">src/filesystem.ts:121</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L94">src/filesystem.ts:94</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="renameSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>rename<wbr/>Sync</span><a href="#renameSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -697,7 +690,7 @@ are given to the completion callback.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L125">src/filesystem.ts:125</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L98">src/filesystem.ts:98</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="rmdir" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>rmdir</span><a href="#rmdir" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -715,7 +708,7 @@ are given to the completion callback.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L165">src/filesystem.ts:165</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L138">src/filesystem.ts:138</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="rmdirSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>rmdir<wbr/>Sync</span><a href="#rmdirSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -733,7 +726,7 @@ are given to the completion callback.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L169">src/filesystem.ts:169</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L142">src/filesystem.ts:142</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="stat" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>stat</span><a href="#stat" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -751,7 +744,7 @@ are given to the completion callback.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Stats.html" class="tsd-signature-type tsd-kind-class">Stats</a><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L129">src/filesystem.ts:129</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L102">src/filesystem.ts:102</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="statSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>stat<wbr/>Sync</span><a href="#statSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -769,7 +762,7 @@ are given to the completion callback.</p>
 <h4 class="tsd-returns-title">Returns <a href="Stats.html" class="tsd-signature-type tsd-kind-class">Stats</a></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L133">src/filesystem.ts:133</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L106">src/filesystem.ts:106</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="symlink" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>symlink</span><a href="#symlink" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -794,7 +787,7 @@ are given to the completion callback.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L315">src/filesystem.ts:315</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L288">src/filesystem.ts:288</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="symlinkSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>symlink<wbr/>Sync</span><a href="#symlinkSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -819,7 +812,7 @@ are given to the completion callback.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L320">src/filesystem.ts:320</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L293">src/filesystem.ts:293</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="truncate" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>truncate</span><a href="#truncate" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -839,7 +832,7 @@ are given to the completion callback.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L228">src/filesystem.ts:228</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L201">src/filesystem.ts:201</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="truncateSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>truncate<wbr/>Sync</span><a href="#truncateSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -859,7 +852,7 @@ are given to the completion callback.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L232">src/filesystem.ts:232</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L205">src/filesystem.ts:205</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="unlink" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>unlink</span><a href="#unlink" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -877,7 +870,7 @@ are given to the completion callback.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L156">src/filesystem.ts:156</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L129">src/filesystem.ts:129</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="unlinkSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>unlink<wbr/>Sync</span><a href="#unlinkSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -895,7 +888,7 @@ are given to the completion callback.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L160">src/filesystem.ts:160</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L133">src/filesystem.ts:133</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="utimes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>utimes</span><a href="#utimes" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -918,7 +911,7 @@ path.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L295">src/filesystem.ts:295</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L268">src/filesystem.ts:268</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="utimesSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>utimes<wbr/>Sync</span><a href="#utimesSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -941,7 +934,15 @@ path.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L300">src/filesystem.ts:300</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L273">src/filesystem.ts:273</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="whenReady" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>when<wbr/>Ready</span><a href="#whenReady" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="whenReady.whenReady-1"><span class="tsd-kind-call-signature">when<wbr/>Ready</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="FileSystem.html" class="tsd-signature-type tsd-kind-class">FileSystem</a><span class="tsd-signature-symbol">&gt;</span><a href="#whenReady.whenReady-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="FileSystem.html" class="tsd-signature-type tsd-kind-class">FileSystem</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L79">src/filesystem.ts:79</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="writeFile" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>write<wbr/>File</span><a href="#writeFile" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -969,7 +970,7 @@ if it already exists.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L254">src/filesystem.ts:254</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L227">src/filesystem.ts:227</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="writeFileSync" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>write<wbr/>File<wbr/>Sync</span><a href="#writeFileSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -997,7 +998,7 @@ if it already exists.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/cc1e648/src/filesystem.ts#L261">src/filesystem.ts:261</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/TheRakeshPurohit/BrowserFS/blob/d922c74/src/filesystem.ts#L234">src/filesystem.ts:234</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -1019,16 +1020,10 @@ if it already exists.</p>
 <ul>
 <li>
 <ul>
-<li><a href="#md:core-methods"><span>Core <wbr/>Methods</span></a></li>
-<li>
-<ul>
-<li><a href="#md:supplemental-methods"><span>Supplemental <wbr/>Methods</span></a></li>
-<li>
-<ul>
-<li><a href="#md:optional-methods"><span>Optional <wbr/>Methods</span></a></li>
-<li><a href="#md:argument-assumptions"><span>Argument <wbr/>Assumptions</span></a></li></ul></li></ul></li></ul></li>
+<li><a href="#md:argument-assumptions"><span>Argument <wbr/>Assumptions</span></a></li></ul></li>
 <li><a href="#constructor" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-512"></use></svg><span>constructor</span></a></li>
 <li><a href="#metadata" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>metadata</span></a></li>
+<li><a href="#Name" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>Name</span></a></li>
 <li><a href="#access" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>access</span></a></li>
 <li><a href="#accessSync" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>access<wbr/>Sync</span></a></li>
 <li><a href="#appendFile" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>append<wbr/>File</span></a></li>
@@ -1067,32 +1062,33 @@ if it already exists.</p>
 <li><a href="#unlinkSync" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>unlink<wbr/>Sync</span></a></li>
 <li><a href="#utimes" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>utimes</span></a></li>
 <li><a href="#utimesSync" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>utimes<wbr/>Sync</span></a></li>
+<li><a href="#whenReady" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>when<wbr/>Ready</span></a></li>
 <li><a href="#writeFile" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>write<wbr/>File</span></a></li>
 <li><a href="#writeFileSync" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>write<wbr/>File<wbr/>Sync</span></a></li></ul></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="../modules.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1"></use></svg><span>BrowserFS</span></a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base="..">
+<li><a href="../modules.html#XMLHTTPRequest"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg>XMLHTTPRequest</a></li>
 <li><a href="../modules.html#default"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg>default</a></li>
+<li><a href="../modules/AsyncMirror.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg>AsyncMirror</a></li>
+<li><a href="../modules/Emscripten.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg>Emscripten</a></li>
+<li><a href="../modules/FolderAdapter.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg>FolderAdapter</a></li>
+<li><a href="../modules/HTTPRequest.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg>HTTPRequest</a></li>
+<li><a href="../modules/IndexedDB.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg>IndexedDB</a></li>
+<li><a href="../modules/IsoFS.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg>IsoFS</a></li>
+<li><a href="../modules/OverlayFS.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg>OverlayFS</a></li>
+<li><a href="../modules/Storage.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg>Storage</a></li>
+<li><a href="../modules/WorkerFS.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg>WorkerFS</a></li>
+<li><a href="../modules/ZipFS.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg>ZipFS</a></li>
 <li><a href="../enums/ActionType.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8"></use></svg>ActionType</a></li>
 <li><a href="../enums/ErrorCode.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8"></use></svg>ErrorCode</a></li>
 <li><a href="../enums/FileType.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8"></use></svg>FileType</a></li>
 <li><a href="ApiError.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>ApiError</a></li>
 <li><a href="AsyncKeyValueFile.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>AsyncKeyValueFile</a></li>
 <li><a href="AsyncKeyValueFileSystem.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>AsyncKeyValueFileSystem</a></li>
+<li><a href="AsyncMirror-1.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>AsyncMirror</a></li>
 <li><a href="BaseFile.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>BaseFile</a></li>
 <li><a href="BaseFileSystem.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>BaseFileSystem</a></li>
-<li><a href="Cred.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>Cred</a></li>
-<li><a href="EmscriptenFS.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>EmscriptenFS</a></li>
-<li><a href="FileFlag.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>FileFlag</a></li>
-<li><a href="FileSystem.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>FileSystem</a></li>
-<li><a href="SimpleSyncRWTransaction.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>SimpleSyncRWTransaction</a></li>
-<li><a href="Stats.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>Stats</a></li>
-<li><a href="SyncKeyValueFile.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>SyncKeyValueFile</a></li>
-<li><a href="SyncKeyValueFileSystem.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>SyncKeyValueFileSystem</a></li>
-<li><a href="SynchronousFileSystem.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>SynchronousFileSystem</a></li>
-<li><a href="../interfaces/AsyncKeyValueROTransaction.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg>AsyncKeyValueROTransaction</a></li>
-<li><a href="../interfaces/AsyncKeyValueRWTransaction.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg>AsyncKeyValueRWTransaction</a></li>
-<li><a href="../interfaces/AsyncKeyValueStore.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg>AsyncKeyValueStore</a></li>
 <li>Loading...</li></ul></nav></div></div></div>
 <div class="tsd-generator">
 <p>Generated using <a href="https://typedoc.org/" rel="noopener" target="_blank">TypeDoc</a></p></div>
